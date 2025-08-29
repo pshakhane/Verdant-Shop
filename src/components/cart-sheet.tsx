@@ -98,7 +98,7 @@ function UpsellRecommendations() {
           <div className="space-y-3">
             {recommendedProducts.map(product => (
               <div key={product.id} className="flex items-center gap-4">
-                <Image src={product.imageUrl} alt={product.name} width={64} height={64} className="rounded-md object-cover" data-ai-hint="product accessory" />
+                <Image src={product.imageUrl} alt={product.name} width={64} height={64} className="rounded-md object-cover" data-ai-hint={`${product.category.toLowerCase()}`} />
                 <div className="flex-grow">
                   <h5 className="font-medium text-sm">{product.name}</h5>
                   <p className="text-sm text-muted-foreground">${product.price.toFixed(2)}</p>
@@ -145,7 +145,7 @@ export default function CartSheet({ isOpen, onOpenChange }: CartSheetProps) {
                       width={80}
                       height={80}
                       className="rounded-lg object-cover"
-                      data-ai-hint="product photo"
+                      data-ai-hint={item.category.toLowerCase()}
                     />
                     <div className="flex-grow">
                       <h4 className="font-semibold">{item.name}</h4>

@@ -63,7 +63,7 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
             width={800}
             height={800}
             className="w-full h-auto object-cover rounded-md"
-            data-ai-hint="detailed product"
+            data-ai-hint={`${product.category.toLowerCase()} ${product.name.toLowerCase()}`}
             priority
           />
         </div>

@@ -6,7 +6,7 @@ export const products: Product[] = [
     name: 'Laptop Pro',
     description: 'High-performance laptop for all your professional needs. Features a stunning display and a powerful processor.',
     price: 1299.99,
-    imageUrl: 'https://picsum.photos/600/600?random=1',
+    imageUrl: 'https://picsum.photos/seed/laptop/600/600',
     category: 'Electronics',
   },
   {
@@ -14,7 +14,7 @@ export const products: Product[] = [
     name: 'Smartphone X',
     description: 'The latest smartphone with a cutting-edge camera and all-day battery life. Stay connected in style.',
     price: 899.50,
-    imageUrl: 'https://picsum.photos/600/600?random=2',
+    imageUrl: 'https://picsum.photos/seed/smartphone/600/600',
     category: 'Electronics',
   },
   {
@@ -22,7 +22,7 @@ export const products: Product[] = [
     name: 'Wireless Headphones',
     description: 'Immerse yourself in high-fidelity sound with these noise-cancelling wireless headphones. Perfect for music lovers.',
     price: 199.00,
-    imageUrl: 'https://picsum.photos/600/600?random=3',
+    imageUrl: 'https://picsum.photos/seed/headphones/600/600',
     category: 'Electronics',
   },
   {
@@ -30,7 +30,7 @@ export const products: Product[] = [
     name: 'Premium Spark Plugs',
     description: 'Set of 4 high-performance spark plugs to improve your engine\'s efficiency and power. Built to last.',
     price: 45.00,
-    imageUrl: 'https://picsum.photos/600/600?random=4',
+    imageUrl: 'https://picsum.photos/seed/sparkplugs/600/600',
     category: 'Car Parts',
   },
   {
@@ -38,7 +38,7 @@ export const products: Product[] = [
     name: 'Ceramic Brake Pads',
     description: 'Front set of ceramic brake pads for superior stopping power and low dust. Ensures a quiet and smooth ride.',
     price: 75.80,
-    imageUrl: 'https://picsum.photos/600/600?random=5',
+    imageUrl: 'https://picsum.photos/seed/brakepads/600/600',
     category: 'Car Parts',
   },
   {
@@ -46,7 +46,7 @@ export const products: Product[] = [
     name: 'Engine Air Filter',
     description: 'High-flow engine air filter to protect your engine from contaminants and improve airflow for better performance.',
     price: 22.30,
-    imageUrl: 'https://picsum.photos/600/600?random=6',
+    imageUrl: 'https://picsum.photos/seed/airfilter/600/600',
     category: 'Car Parts',
   },
   {
@@ -54,7 +54,7 @@ export const products: Product[] = [
     name: 'Organic Gala Apples',
     description: 'A bag of fresh, crispy, and sweet organic Gala apples. Perfect for a healthy snack.',
     price: 5.99,
-    imageUrl: 'https://picsum.photos/600/600?random=7',
+    imageUrl: 'https://picsum.photos/seed/apples/600/600',
     category: 'Groceries',
   },
   {
@@ -62,7 +62,7 @@ export const products: Product[] = [
     name: 'Whole Milk Gallon',
     description: 'One gallon of fresh, Grade A whole milk. Rich in calcium and vitamin D.',
     price: 3.50,
-    imageUrl: 'https://picsum.photos/600/600?random=8',
+    imageUrl: 'https://picsum.photos/seed/milk/600/600',
     category: 'Groceries',
   },
    {
@@ -70,7 +70,7 @@ export const products: Product[] = [
     name: 'Sourdough Bread Loaf',
     description: 'Artisan sourdough loaf with a crispy crust and a chewy interior. Baked fresh daily.',
     price: 6.25,
-    imageUrl: 'https://picsum.photos/600/600?random=9',
+    imageUrl: 'https://picsum.photos/seed/bread/600/600',
     category: 'Groceries',
   },
 ];
