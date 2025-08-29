@@ -1,7 +1,7 @@
 "use client"
 
 import Link from 'next/link';
-import { Leaf, ShoppingCart } from 'lucide-react';
+import { ShoppingCart, ShoppingBag } from 'lucide-react';
 import { Button } from './ui/button';
 import { useCart } from '@/context/cart-context';
 import CartSheet from './cart-sheet';
@@ -16,8 +16,8 @@ export default function Header() {
       <header className="bg-background/80 backdrop-blur-sm sticky top-0 z-40 border-b">
         <div className="container mx-auto px-4 h-20 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 text-xl font-bold text-primary font-headline">
-            <Leaf className="w-7 h-7" />
-            Verdant Shop
+            <ShoppingBag className="w-7 h-7" />
+            Mega Shop
           </Link>
           <div className="flex items-center gap-4">
             <Button variant="ghost" className="hidden md:flex" asChild>

@@ -6,8 +6,8 @@ import Header from '@/components/header';
 import Template from './template';
 
 export const metadata: Metadata = {
-  title: 'Verdant Shop',
-  description: 'A modern, user-friendly e-commerce app for browsing and purchasing products.',
+  title: 'Mega Shop',
+  description: 'Your one-stop shop for everything you need.',
 };
 
 export default function RootLayout({

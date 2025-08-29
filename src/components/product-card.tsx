@@ -42,7 +42,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             width={600}
             height={600}
             className="w-full h-64 object-cover"
-            data-ai-hint="house plant"
+            data-ai-hint="product photo"
           />
         </Link>
       </CardHeader>

@@ -38,7 +38,7 @@ export default function CheckoutPage() {
     console.log("Order placed:", data);
     toast({
       title: "Order Placed!",
-      description: "Thank you for your purchase. Your plants are on their way!",
+      description: "Thank you for your purchase. Your items are on their way!",
     });
     clearCart();
     router.push('/');
@@ -101,7 +101,7 @@ export default function CheckoutPage() {
                     <FormItem>
                       <FormLabel>Street Address</FormLabel>
                       <FormControl>
-                        <Input placeholder="123 Plant Street" {...field} />
+                        <Input placeholder="123 Main Street" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -115,7 +115,7 @@ export default function CheckoutPage() {
                       <FormItem className="flex-grow">
                         <FormLabel>City</FormLabel>
                         <FormControl>
-                          <Input placeholder="Greenville" {...field} />
+                          <Input placeholder="Anytown" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>

@@ -21,8 +21,8 @@ export default function Home() {
   return (
     <div className="container mx-auto px-4 py-8">
       <header className="text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold font-headline text-primary tracking-tight">Welcome to Verdant Shop</h1>
-        <p className="text-lg text-muted-foreground mt-2">Find the perfect green companions for your space.</p>
+        <h1 className="text-4xl md:text-5xl font-bold font-headline text-primary tracking-tight">Welcome to Mega Shop</h1>
+        <p className="text-lg text-muted-foreground mt-2">Your one-stop shop for everything you need.</p>
       </header>
 
       <div className="mb-8">
