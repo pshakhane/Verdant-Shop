@@ -72,6 +72,7 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
         <div>
           <span className="text-sm font-medium text-primary uppercase tracking-wider">{product.category}</span>
           <h1 className="text-4xl lg:text-5xl font-bold font-headline my-3">{product.name}</h1>
+          {product.modelNumber && <p className="text-sm text-muted-foreground mb-4">Model No. {product.modelNumber}</p>}
           <p className="text-3xl font-semibold text-primary mb-6">{formatPrice(product.price)}</p>
           <p className="text-base text-muted-foreground leading-relaxed mb-8">
             {product.description}

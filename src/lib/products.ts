@@ -8,6 +8,7 @@ export const products: Product[] = [
     price: 1299.99,
     imageUrl: 'https://picsum.photos/seed/laptop/600/600',
     category: 'Electronics',
+    modelNumber: 'LP-2024-A',
   },
   {
     id: '2',
@@ -16,6 +17,7 @@ export const products: Product[] = [
     price: 899.50,
     imageUrl: 'https://picsum.photos/seed/smartphone/600/600',
     category: 'Electronics',
+    modelNumber: 'SX-2024-C',
   },
   {
     id: '3',
@@ -24,6 +26,7 @@ export const products: Product[] = [
     price: 199.00,
     imageUrl: 'https://picsum.photos/seed/headphones/600/600',
     category: 'Electronics',
+    modelNumber: 'WH-2024-B',
   },
   {
     id: '4',
@@ -32,6 +35,7 @@ export const products: Product[] = [
     price: 45.00,
     imageUrl: 'https://picsum.photos/seed/sparkplugs/600/600',
     category: 'Car Parts',
+    modelNumber: 'PSP-2024-D',
   },
   {
     id: '5',
@@ -40,6 +44,7 @@ export const products: Product[] = [
     price: 75.80,
     imageUrl: 'https://picsum.photos/seed/brakepads/600/600',
     category: 'Car Parts',
+    modelNumber: 'CBP-2024-F',
   },
   {
     id: '6',
@@ -48,6 +53,7 @@ export const products: Product[] = [
     price: 22.30,
     imageUrl: 'https://picsum.photos/seed/airfilter/600/600',
     category: 'Car Parts',
+    modelNumber: 'EAF-2024-E',
   },
   {
     id: '7',
@@ -56,6 +62,7 @@ export const products: Product[] = [
     price: 5.99,
     imageUrl: 'https://picsum.photos/seed/apples/600/600',
     category: 'Groceries',
+    modelNumber: 'OGA-2024-G',
   },
   {
     id: '8',
@@ -64,6 +71,7 @@ export const products: Product[] = [
     price: 3.50,
     imageUrl: 'https://picsum.photos/seed/milk/600/600',
     category: 'Groceries',
+    modelNumber: 'WMG-2024-H',
   },
    {
     id: '9',
@@ -72,6 +80,7 @@ export const products: Product[] = [
     price: 6.25,
     imageUrl: 'https://picsum.photos/seed/bread/600/600',
     category: 'Groceries',
+    modelNumber: 'SBL-2024-I',
   },
 ];
 
