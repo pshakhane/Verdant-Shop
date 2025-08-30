@@ -19,6 +19,8 @@ const availableCurrencies: Currency[] = [
     { code: 'EUR', name: 'Euro', symbol: '€' },
     { code: 'GBP', name: 'British Pound', symbol: '£' },
     { code: 'JPY', name: 'Japanese Yen', symbol: '¥' },
+    { code: 'AUD', name: 'Australian Dollar', symbol: 'A$' },
+    { code: 'SLL', name: 'Sierra Leonean Leone', symbol: 'Le' },
 ];
 
 const conversionRates: ConversionRates = {
@@ -26,6 +28,8 @@ const conversionRates: ConversionRates = {
     EUR: 0.92,
     GBP: 0.79,
     JPY: 157.74,
+    AUD: 1.52,
+    SLL: 22500,
 };
 
 type CurrencyContextType = {
@@ -104,8 +108,7 @@ export const useCurrency = () => {
         ...context,
         isInitialized: context.isInitialized && isClient,
         formatPrice: (price: number) => {
-            if (!isClient) {
-                // Return a placeholder or default format on the server
+            if (!context.isInitialized || !isClient) {
                 const defaultCurrency = availableCurrencies[0];
                  const rate = conversionRates[defaultCurrency.code] || 1;
                 const convertedPrice = price * rate;
