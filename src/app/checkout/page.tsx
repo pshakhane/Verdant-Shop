@@ -14,6 +14,8 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import Image from 'next/image';
 import { Separator } from '@/components/ui/separator';
 import { useCurrency } from '@/context/currency-context';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { CreditCard, Truck } from 'lucide-react';
 
 const checkoutSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -21,6 +23,7 @@ const checkoutSchema = z.object({
   address: z.string().min(5, "Address is required"),
   city: z.string().min(2, "City is required"),
   zip: z.string().regex(/^\d{5}$/, "Invalid ZIP code"),
+  paymentMethod: z.string({ required_error: "Please select a payment method."}),
 });
 
 type CheckoutFormValues = z.infer<typeof checkoutSchema>;
@@ -142,35 +145,70 @@ export default function CheckoutPage() {
             </CardContent>
         </Card>
 
-        <Card className="bg-card">
-            <CardHeader>
-                <CardTitle>Order Summary</CardTitle>
-            </CardHeader>
-            <CardContent>
-                <div className="space-y-4">
-                    {items.map(item => (
-                        <div key={item.id} className="flex items-center justify-between">
-                            <div className="flex items-center gap-4">
-                                <Image src={item.imageUrl} alt={item.name} width={64} height={64} className="rounded-md object-cover" data-ai-hint={item.category.toLowerCase()} />
-                                <div>
-                                    <p className="font-medium">{item.name}</p>
-                                    <p className="text-sm text-muted-foreground">Qty: {item.quantity}</p>
+        <div className="space-y-8">
+            <Card className="bg-card">
+                <CardHeader>
+                    <CardTitle>Order Summary</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <div className="space-y-4">
+                        {items.map(item => (
+                            <div key={item.id} className="flex items-center justify-between">
+                                <div className="flex items-center gap-4">
+                                    <Image src={item.imageUrl} alt={item.name} width={64} height={64} className="rounded-md object-cover" data-ai-hint={item.category.toLowerCase()} />
+                                    <div>
+                                        <p className="font-medium">{item.name}</p>
+                                        <p className="text-sm text-muted-foreground">Qty: {item.quantity}</p>
+                                    </div>
                                 </div>
+                                <p className="font-medium">{formatPrice(item.price * item.quantity)}</p>
                             </div>
-                            <p className="font-medium">{formatPrice(item.price * item.quantity)}</p>
+                        ))}
+                        <Separator />
+                        <div className="flex justify-between items-center text-lg font-bold">
+                            <p>Total</p>
+                            <p>{formatPrice(totalPrice)}</p>
                         </div>
-                    ))}
-                    <Separator />
-                    <div className="flex justify-between items-center text-lg font-bold">
-                        <p>Total</p>
-                        <p>{formatPrice(totalPrice)}</p>
                     </div>
-                </div>
-                <Button onClick={form.handleSubmit(onSubmit)} size="lg" className="w-full mt-8">
-                    Place Order
-                </Button>
-            </CardContent>
-        </Card>
+                </CardContent>
+            </Card>
+
+            <Card>
+                <CardHeader>
+                    <CardTitle>Payment Method</CardTitle>
+                    <CardDescription>Select how you'd like to pay.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                <FormField
+                  control={form.control}
+                  name="paymentMethod"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="grid md:grid-cols-2 gap-4">
+                            <Label className="flex items-center gap-4 border rounded-md p-4 hover:bg-accent has-[input:checked]:bg-accent has-[input:checked]:border-primary transition-all">
+                                <RadioGroupItem value="card" id="card" />
+                                <CreditCard className="w-6 h-6" />
+                                <span>Credit Card</span>
+                            </Label>
+                            <Label className="flex items-center gap-4 border rounded-md p-4 hover:bg-accent has-[input:checked]:bg-accent has-[input:checked]:border-primary transition-all">
+                                <RadioGroupItem value="cash" id="cash" />
+                                <Truck className="w-6 h-6" />
+                                <span>Cash on Delivery</span>
+                            </Label>
+                        </RadioGroup>
+                      </FormControl>
+                      <FormMessage className="pt-2" />
+                    </FormItem>
+                  )}
+                />
+                </CardContent>
+            </Card>
+
+            <Button onClick={form.handleSubmit(onSubmit)} size="lg" className="w-full">
+                Place Order
+            </Button>
+        </div>
       </div>
     </div>
   );
