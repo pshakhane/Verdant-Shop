@@ -20,6 +20,7 @@ import { getUpsellRecommendations } from '@/ai/flows/upsell-recommendations';
 import { Skeleton } from './ui/skeleton';
 import { products } from '@/lib/products';
 import { Alert, AlertDescription, AlertTitle } from './ui/alert';
+import { useCurrency } from '@/context/currency-context';
 
 interface CartSheetProps {
   isOpen: boolean;
@@ -61,6 +62,7 @@ function UpsellRecommendations() {
     const { items: cartItems, addItem } = useCart();
     const [recommendations, setRecommendations] = useState<string[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const { formatPrice } = useCurrency();
   
     useEffect(() => {
       if (cartItems.length > 0) {
@@ -101,7 +103,7 @@ function UpsellRecommendations() {
                 <Image src={product.imageUrl} alt={product.name} width={64} height={64} className="rounded-md object-cover" data-ai-hint={`${product.category.toLowerCase()}`} />
                 <div className="flex-grow">
                   <h5 className="font-medium text-sm">{product.name}</h5>
-                  <p className="text-sm text-muted-foreground">${product.price.toFixed(2)}</p>
+                  <p className="text-sm text-muted-foreground">{formatPrice(product.price)}</p>
                 </div>
                 <Button size="sm" variant="outline" onClick={() => addItem(product)}>
                   <Plus className="h-4 w-4 mr-2" />
@@ -125,6 +127,7 @@ function UpsellRecommendations() {
 
 export default function CartSheet({ isOpen, onOpenChange }: CartSheetProps) {
   const { items, removeItem, totalPrice, cartCount, clearCart } = useCart();
+  const { formatPrice } = useCurrency();
 
   return (
     <Sheet open={isOpen} onOpenChange={onOpenChange}>
@@ -149,7 +152,7 @@ export default function CartSheet({ isOpen, onOpenChange }: CartSheetProps) {
                     />
                     <div className="flex-grow">
                       <h4 className="font-semibold">{item.name}</h4>
-                      <p className="text-sm text-muted-foreground">${item.price.toFixed(2)}</p>
+                      <p className="text-sm text-muted-foreground">{formatPrice(item.price)}</p>
                       <div className="mt-2">
                         <QuantitySelector itemId={item.id} quantity={item.quantity} />
                       </div>
@@ -168,7 +171,7 @@ export default function CartSheet({ isOpen, onOpenChange }: CartSheetProps) {
               <div className="w-full space-y-4">
                 <div className="flex justify-between font-semibold text-lg">
                   <span>Subtotal</span>
-                  <span>${totalPrice.toFixed(2)}</span>
+                  <span>{formatPrice(totalPrice)}</span>
                 </div>
                 <Button asChild size="lg" className="w-full" onClick={() => onOpenChange(false)}>
                   <Link href="/checkout">

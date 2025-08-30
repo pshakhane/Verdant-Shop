@@ -4,6 +4,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { CartProvider } from '@/context/cart-context';
 import Header from '@/components/header';
 import Template from './template';
+import { CurrencyProvider } from '@/context/currency-context';
 
 export const metadata: Metadata = {
   title: 'Mega Shop',
@@ -24,11 +25,13 @@ export default function RootLayout({
       </head>
       <body className="font-body antialiased">
         <CartProvider>
-          <div className="flex flex-col min-h-screen">
-            <Header />
-            <Template>{children}</Template>
-          </div>
-          <Toaster />
+          <CurrencyProvider>
+            <div className="flex flex-col min-h-screen">
+              <Header />
+              <Template>{children}</Template>
+            </div>
+            <Toaster />
+          </CurrencyProvider>
         </CartProvider>
       </body>
     </html>

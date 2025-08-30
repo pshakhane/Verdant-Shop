@@ -14,6 +14,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/context/cart-context';
 import { useToast } from '@/hooks/use-toast';
+import { useCurrency } from '@/context/currency-context';
 
 interface ProductCardProps {
   product: Product;
@@ -22,6 +23,7 @@ interface ProductCardProps {
 export default function ProductCard({ product }: ProductCardProps) {
     const { addItem } = useCart();
     const { toast } = useToast();
+    const { formatPrice } = useCurrency();
 
     const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
@@ -53,7 +55,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         <p className="text-sm text-muted-foreground mt-1">{product.category}</p>
       </CardContent>
       <CardFooter className="p-4 pt-0 flex justify-between items-center">
-        <p className="text-xl font-bold text-primary">${product.price.toFixed(2)}</p>
+        <p className="text-xl font-bold text-primary">{formatPrice(product.price)}</p>
         <Button onClick={handleAddToCart}>
             <Plus className="mr-2 h-4 w-4" /> Add to Cart
         </Button>

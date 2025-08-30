@@ -1,15 +1,18 @@
 "use client"
 
 import Link from 'next/link';
-import { ShoppingCart, ShoppingBag } from 'lucide-react';
+import { ShoppingCart, ShoppingBag, Globe, Check } from 'lucide-react';
 import { Button } from './ui/button';
 import { useCart } from '@/context/cart-context';
 import CartSheet from './cart-sheet';
 import { useState } from 'react';
+import { useCurrency } from '@/context/currency-context';
+import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 
 export default function Header() {
   const { cartCount, isInitialized } = useCart();
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const { availableCurrencies, currency, setCurrency } = useCurrency();
 
   return (
     <>
@@ -23,6 +26,31 @@ export default function Header() {
             <Button variant="ghost" className="hidden md:flex" asChild>
               <Link href="/">Home</Link>
             </Button>
+
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <Globe className="h-6 w-6" />
+                  <span className="sr-only">Select currency</span>
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-48 p-2">
+                <div className="grid gap-1">
+                  {availableCurrencies.map((c) => (
+                    <Button
+                      key={c.code}
+                      variant="ghost"
+                      className="w-full justify-start"
+                      onClick={() => setCurrency(c.code)}
+                    >
+                      {c.code} - {c.name}
+                      {currency.code === c.code && <Check className="ml-auto h-4 w-4" />}
+                    </Button>
+                  ))}
+                </div>
+              </PopoverContent>
+            </Popover>
+
             <Button variant="ghost" className="relative" size="icon" onClick={() => setIsCartOpen(true)}>
               <ShoppingCart className="h-6 w-6" />
               {isInitialized && cartCount > 0 && (

@@ -10,12 +10,14 @@ import { useCart } from '@/context/cart-context';
 import { useToast } from '@/hooks/use-toast';
 import { Plus } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useCurrency } from '@/context/currency-context';
 
 export default function ProductDetailPage({ params }: { params: { id: string } }) {
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const { addItem } = useCart();
   const { toast } = useToast();
+  const { formatPrice } = useCurrency();
   
   useEffect(() => {
     const fetchedProduct = getProductById(params.id);
@@ -70,7 +72,7 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
         <div>
           <span className="text-sm font-medium text-primary uppercase tracking-wider">{product.category}</span>
           <h1 className="text-4xl lg:text-5xl font-bold font-headline my-3">{product.name}</h1>
-          <p className="text-3xl font-semibold text-primary mb-6">${product.price.toFixed(2)}</p>
+          <p className="text-3xl font-semibold text-primary mb-6">{formatPrice(product.price)}</p>
           <p className="text-base text-muted-foreground leading-relaxed mb-8">
             {product.description}
           </p>

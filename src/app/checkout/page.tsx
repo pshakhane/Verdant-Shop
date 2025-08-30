@@ -13,6 +13,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import Image from 'next/image';
 import { Separator } from '@/components/ui/separator';
+import { useCurrency } from '@/context/currency-context';
 
 const checkoutSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -28,6 +29,7 @@ export default function CheckoutPage() {
   const router = useRouter();
   const { items, totalPrice, clearCart } = useCart();
   const { toast } = useToast();
+  const { formatPrice } = useCurrency();
   
   const form = useForm<CheckoutFormValues>({
     resolver: zodResolver(checkoutSchema),
@@ -155,13 +157,13 @@ export default function CheckoutPage() {
                                     <p className="text-sm text-muted-foreground">Qty: {item.quantity}</p>
                                 </div>
                             </div>
-                            <p className="font-medium">${(item.price * item.quantity).toFixed(2)}</p>
+                            <p className="font-medium">{formatPrice(item.price * item.quantity)}</p>
                         </div>
                     ))}
                     <Separator />
                     <div className="flex justify-between items-center text-lg font-bold">
                         <p>Total</p>
-                        <p>${totalPrice.toFixed(2)}</p>
+                        <p>{formatPrice(totalPrice)}</p>
                     </div>
                 </div>
                 <Button onClick={form.handleSubmit(onSubmit)} size="lg" className="w-full mt-8">
