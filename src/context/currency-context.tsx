@@ -33,6 +33,7 @@ type CurrencyContextType = {
     setCurrency: (code: string) => void;
     formatPrice: (price: number) => string;
     availableCurrencies: Currency[];
+    isInitialized: boolean;
 };
 
 const CurrencyContext = createContext<CurrencyContextType | undefined>(undefined);
@@ -83,7 +84,7 @@ export const CurrencyProvider = ({ children }: { children: ReactNode }) => {
     };
 
     return (
-        <CurrencyContext.Provider value={{ currency, setCurrency, formatPrice, availableCurrencies }}>
+        <CurrencyContext.Provider value={{ currency, setCurrency, formatPrice, availableCurrencies, isInitialized }}>
             {children}
         </CurrencyContext.Provider>
     );
@@ -94,5 +95,26 @@ export const useCurrency = () => {
     if (context === undefined) {
         throw new Error('useCurrency must be used within a CurrencyProvider');
     }
-    return context;
+    const [isClient, setIsClient] = React.useState(false);
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
+
+    return {
+        ...context,
+        isInitialized: context.isInitialized && isClient,
+        formatPrice: (price: number) => {
+            if (!isClient) {
+                // Return a placeholder or default format on the server
+                const defaultCurrency = availableCurrencies[0];
+                 const rate = conversionRates[defaultCurrency.code] || 1;
+                const convertedPrice = price * rate;
+                return new Intl.NumberFormat(undefined, {
+                    style: 'currency',
+                    currency: defaultCurrency.code,
+                }).format(convertedPrice);
+            }
+            return context.formatPrice(price);
+        },
+    };
 };

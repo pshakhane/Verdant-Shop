@@ -113,5 +113,13 @@ export const useCart = () => {
   if (context === undefined) {
     throw new Error('useCart must be used within a CartProvider');
   }
-  return context;
+  const [isClient, setIsClient] = React.useState(false);
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  return {
+    ...context,
+    isInitialized: context.isInitialized && isClient
+  };
 };
