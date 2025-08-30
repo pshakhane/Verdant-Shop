@@ -81,7 +81,12 @@ export const CurrencyProvider = ({ children }: { children: ReactNode }) => {
     const formatPrice = (price: number) => {
         const rate = conversionRates[currency.code] || 1;
         const convertedPrice = price * rate;
-        return new Intl.NumberFormat(undefined, {
+        
+        // When using Intl, on the server it might not know the user's locale, 
+        // so we can specify 'en-US' as a default.
+        const userLocale = typeof window !== 'undefined' ? navigator.language : 'en-US';
+
+        return new Intl.NumberFormat(userLocale, {
             style: 'currency',
             currency: currency.code,
         }).format(convertedPrice);
@@ -104,20 +109,22 @@ export const useCurrency = () => {
         setIsClient(true);
     }, []);
 
+    const formatPrice = (price: number) => {
+        if (!context.isInitialized || !isClient) {
+            const defaultCurrency = availableCurrencies[0];
+            const rate = conversionRates[defaultCurrency.code] || 1;
+            const convertedPrice = price * rate;
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: defaultCurrency.code,
+            }).format(convertedPrice);
+        }
+        return context.formatPrice(price);
+    };
+
     return {
         ...context,
         isInitialized: context.isInitialized && isClient,
-        formatPrice: (price: number) => {
-            if (!context.isInitialized || !isClient) {
-                const defaultCurrency = availableCurrencies[0];
-                 const rate = conversionRates[defaultCurrency.code] || 1;
-                const convertedPrice = price * rate;
-                return new Intl.NumberFormat(undefined, {
-                    style: 'currency',
-                    currency: defaultCurrency.code,
-                }).format(convertedPrice);
-            }
-            return context.formatPrice(price);
-        },
+        formatPrice,
     };
 };
