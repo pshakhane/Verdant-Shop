@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useReducer, useEffect, ReactNode } from 'react';
 import type { CartItem, Product } from '@/lib/types';
 
-const CART_STORAGE_KEY = 'verdant-shop-cart';
+const CART_STORAGE_KEY = 'mega-shop-cart';
 
 type CartState = {
   items: CartItem[];
