@@ -33,7 +33,7 @@ export const products: Product[] = [
     name: 'Premium Spark Plugs',
     description: 'Set of 4 high-performance spark plugs to improve your engine\'s efficiency and power. Built to last.',
     price: 45.00,
-    imageUrl: 'https://picsum.photos/seed/sparkplugs/600/600',
+    imageUrl: 'https://images.unsplash.com/photo-1699158660219-bdc29c7a841e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxQcmVtaXVtJTIwU3BhcmslMjBwbHVnc3xlbnwwfHx8fDE3NTY2ODQ1MjN8MA&ixlib=rb-4.1.0&q=80&w=1080',
     category: 'Car Parts',
     modelNumber: 'PSP-2024-D',
   },
