@@ -42,7 +42,7 @@ export const products: Product[] = [
     name: 'Ceramic Brake Pads',
     description: 'Front set of ceramic brake pads for superior stopping power and low dust. Ensures a quiet and smooth ride.',
     price: 75.80,
-    imageUrl: 'https://picsum.photos/seed/brakepads/600/600',
+    imageUrl: 'https://images.unsplash.com/photo-1646586995332-de830c4cc0f3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxDZXJhbWljJTIwQnJha2UlMjBQYWRzfGVufDB8fHx8MTc1NjY4NDY4OXww&ixlib=rb-4.1.0&q=80&w=1080',
     category: 'Car Parts',
     modelNumber: 'CBP-2024-F',
   },
