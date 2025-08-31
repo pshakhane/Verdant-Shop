@@ -15,7 +15,7 @@ export const products: Product[] = [
     name: 'Smartphone X',
     description: 'The latest smartphone with a cutting-edge camera and all-day battery life. Stay connected in style.',
     price: 899.50,
-    imageUrl: 'https://picsum.photos/seed/smartphone/600/600',
+    imageUrl: 'https://images.unsplash.com/photo-1608048974883-3c761722fe3a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxTbWFydHBob25lJTIwWHxlbnwwfHx8fDE3NTY2ODQzOTR8MA&ixlib=rb-4.1.0&q=80&w=1080',
     category: 'Electronics',
     modelNumber: 'SX-2024-C',
   },
