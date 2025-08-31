@@ -6,7 +6,7 @@ export const products: Product[] = [
     name: 'Laptop Pro',
     description: 'High-performance laptop for all your professional needs. Features a stunning display and a powerful processor.',
     price: 1299.99,
-    imageUrl: 'https://picsum.photos/seed/laptop/600/600',
+    imageUrl: 'https://images.unsplash.com/photo-1672241860863-fab879bd4a07?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxsYXB0b3AlMjBwcm98ZW58MHx8fHwxNzU2Njg0MjkyfDA&ixlib=rb-4.1.0&q=80&w=1080',
     category: 'Electronics',
     modelNumber: 'LP-2024-A',
   },
