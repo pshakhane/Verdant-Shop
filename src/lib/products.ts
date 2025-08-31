@@ -24,7 +24,7 @@ export const products: Product[] = [
     name: 'Wireless Headphones',
     description: 'Immerse yourself in high-fidelity sound with these noise-cancelling wireless headphones. Perfect for music lovers.',
     price: 199.00,
-    imageUrl: 'https://picsum.photos/seed/headphones/600/600',
+    imageUrl: 'https://images.unsplash.com/photo-1609081219090-a6d81d3085bf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxXaXJlbGVzcyUyMEhlYWRwaG9uZXN8ZW58MHx8fHwxNzU2Njg0NDU1fDA&ixlib=rb-4.1.0&q=80&w=1080',
     category: 'Electronics',
     modelNumber: 'WH-2024-B',
   },
