@@ -51,7 +51,7 @@ export const products: Product[] = [
     name: 'Engine Air Filter',
     description: 'High-flow engine air filter to protect your engine from contaminants and improve airflow for better performance.',
     price: 22.30,
-    imageUrl: 'https://picsum.photos/seed/airfilter/600/600',
+    imageUrl: 'https://images.unsplash.com/photo-1586040661238-69c4c4a46b55?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxFbmdpbmUlMjBBaXIlMjBGaWx0ZXJ8ZW58MHx8fHwxNzU2Njg0Nzc5fDA&ixlib=rb-4.1.0&q=80&w=1080',
     category: 'Car Parts',
     modelNumber: 'EAF-2024-E',
   },
