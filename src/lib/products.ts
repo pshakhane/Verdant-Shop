@@ -78,7 +78,7 @@ export const products: Product[] = [
     name: 'Sourdough Bread Loaf',
     description: 'Artisan sourdough loaf with a crispy crust and a chewy interior. Baked fresh daily.',
     price: 6.25,
-    imageUrl: 'https://picsum.photos/seed/bread/600/600',
+    imageUrl: 'https://images.unsplash.com/photo-1654524086749-aa2703ab0784?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxTb3VyZG91Z2glMjBCcmVhZCUyMExvYWZ8ZW58MHx8fHwxNzU2Njg0OTk1fDA&ixlib=rb-4.1.0&q=80&w=1080',
     category: 'Groceries',
     modelNumber: 'SBL-2024-I',
   },
