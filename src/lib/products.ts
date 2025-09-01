@@ -69,7 +69,7 @@ export const products: Product[] = [
     name: 'Whole Milk Gallon',
     description: 'One gallon of fresh, Grade A whole milk. Rich in calcium and vitamin D.',
     price: 3.50,
-    imageUrl: 'https://picsum.photos/seed/milk/600/600',
+    imageUrl: 'https://images.unsplash.com/photo-1685531309627-f0c9e8656ff9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxXaG9sZSUyME1pbGslMjBHYWxsb258ZW58MHx8fHwxNzU2Njg0OTE1fDA&ixlib=rb-4.1.0&q=80&w=1080',
     category: 'Groceries',
     modelNumber: 'WMG-2024-H',
   },
