@@ -60,7 +60,7 @@ export const products: Product[] = [
     name: 'Organic Gala Apples',
     description: 'A bag of fresh, crispy, and sweet organic Gala apples. Perfect for a healthy snack.',
     price: 5.99,
-    imageUrl: 'https://picsum.photos/seed/apples/600/600',
+    imageUrl: 'https://images.unsplash.com/photo-1563209041-9790c0c08a45?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxPcmdhbmljJTIwR2FsYSUyMEFwcGxlc3xlbnwwfHx8fDE3NTY2ODQ4MzR8MA&ixlib=rb-4.1.0&q=80&w=1080',
     category: 'Groceries',
     modelNumber: 'OGA-2024-G',
   },
