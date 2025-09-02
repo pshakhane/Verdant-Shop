@@ -24,6 +24,19 @@ const checkoutSchema = z.object({
   city: z.string().min(2, "City is required"),
   zip: z.string().regex(/^\d{5}$/, "Invalid ZIP code"),
   paymentMethod: z.string({ required_error: "Please select a payment method."}),
+  cardNumber: z.string().optional(),
+  cardExpiry: z.string().optional(),
+  cardCvc: z.string().optional(),
+}).refine(data => {
+    if (data.paymentMethod === 'card') {
+        return !!data.cardNumber && data.cardNumber.replace(/\s/g, '').length === 16 &&
+               !!data.cardExpiry && /^(0[1-9]|1[0-2])\s*\/\s*\d{2}$/.test(data.cardExpiry) &&
+               !!data.cardCvc && /^\d{3,4}$/.test(data.cardCvc);
+    }
+    return true;
+}, {
+    message: "Please enter valid credit card details.",
+    path: ['paymentMethod']
 });
 
 type CheckoutFormValues = z.infer<typeof checkoutSchema>;
@@ -38,6 +51,8 @@ export default function CheckoutPage() {
     resolver: zodResolver(checkoutSchema),
     defaultValues: { name: '', email: '', address: '', city: '', zip: '' },
   });
+
+  const paymentMethod = form.watch('paymentMethod');
 
   const onSubmit = (data: CheckoutFormValues) => {
     console.log("Order placed:", data);
@@ -64,15 +79,15 @@ export default function CheckoutPage() {
   return (
     <div className="container mx-auto px-4 py-12">
       <h1 className="text-4xl font-bold font-headline text-center mb-10">Checkout</h1>
-      <div className="grid md:grid-cols-2 gap-12 items-start">
+      <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="grid md:grid-cols-2 gap-12 items-start">
         <Card>
             <CardHeader>
                 <CardTitle>Shipping Information</CardTitle>
                 <CardDescription>Enter your details to complete the purchase.</CardDescription>
             </CardHeader>
-            <CardContent>
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <CardContent className="space-y-6">
+              
                 <FormField
                   control={form.control}
                   name="name"
@@ -140,8 +155,7 @@ export default function CheckoutPage() {
                     )}
                   />
                 </div>
-              </form>
-            </Form>
+            
             </CardContent>
         </Card>
 
@@ -186,12 +200,12 @@ export default function CheckoutPage() {
                     <FormItem>
                       <FormControl>
                         <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="grid md:grid-cols-2 gap-4">
-                            <Label className="flex items-center gap-4 border rounded-md p-4 hover:bg-accent has-[input:checked]:bg-accent has-[input:checked]:border-primary transition-all">
+                            <Label className="flex items-center gap-4 border rounded-md p-4 hover:bg-accent has-[input:checked]:bg-accent has-[input:checked]:border-primary transition-all cursor-pointer">
                                 <RadioGroupItem value="card" id="card" />
                                 <CreditCard className="w-6 h-6" />
                                 <span>Credit Card</span>
                             </Label>
-                            <Label className="flex items-center gap-4 border rounded-md p-4 hover:bg-accent has-[input:checked]:bg-accent has-[input:checked]:border-primary transition-all">
+                            <Label className="flex items-center gap-4 border rounded-md p-4 hover:bg-accent has-[input:checked]:bg-accent has-[input:checked]:border-primary transition-all cursor-pointer">
                                 <RadioGroupItem value="cash" id="cash" />
                                 <Truck className="w-6 h-6" />
                                 <span>Cash on Delivery</span>
@@ -202,14 +216,60 @@ export default function CheckoutPage() {
                     </FormItem>
                   )}
                 />
+                {paymentMethod === 'card' && (
+                  <div className="space-y-4 pt-6">
+                     <FormField
+                        control={form.control}
+                        name="cardNumber"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Card Number</FormLabel>
+                            <FormControl>
+                              <Input placeholder="0000 0000 0000 0000" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <div className="flex gap-4">
+                        <FormField
+                            control={form.control}
+                            name="cardExpiry"
+                            render={({ field }) => (
+                            <FormItem className="flex-grow">
+                                <FormLabel>Expiry Date</FormLabel>
+                                <FormControl>
+                                <Input placeholder="MM / YY" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="cardCvc"
+                            render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>CVC</FormLabel>
+                                <FormControl>
+                                <Input placeholder="123" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                            )}
+                        />
+                      </div>
+                  </div>
+                )}
                 </CardContent>
             </Card>
 
-            <Button onClick={form.handleSubmit(onSubmit)} size="lg" className="w-full">
+            <Button type="submit" size="lg" className="w-full">
                 Place Order
             </Button>
         </div>
-      </div>
+      </form>
+      </Form>
     </div>
   );
 }
