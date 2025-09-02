@@ -6,7 +6,6 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useCart } from "@/context/cart-context";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -15,7 +14,14 @@ import Image from 'next/image';
 import { Separator } from '@/components/ui/separator';
 import { useCurrency } from '@/context/currency-context';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { CreditCard, Truck } from 'lucide-react';
+import { CreditCard, Truck, Loader2 } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe, StripeElementsOptions } from '@stripe/stripe-js';
+import { createPaymentIntent } from '@/lib/stripe/actions';
+import { CheckoutForm } from '@/components/checkout-form';
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
 const checkoutSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -24,19 +30,6 @@ const checkoutSchema = z.object({
   city: z.string().min(2, "City is required"),
   zip: z.string().regex(/^\d{5}$/, "Invalid ZIP code"),
   paymentMethod: z.string({ required_error: "Please select a payment method."}),
-  cardNumber: z.string().optional(),
-  cardExpiry: z.string().optional(),
-  cardCvc: z.string().optional(),
-}).refine(data => {
-    if (data.paymentMethod === 'card') {
-        return !!data.cardNumber && data.cardNumber.replace(/\s/g, '').length === 16 &&
-               !!data.cardExpiry && /^(0[1-9]|1[0-2])\s*\/\s*\d{2}$/.test(data.cardExpiry) &&
-               !!data.cardCvc && /^\d{3,4}$/.test(data.cardCvc);
-    }
-    return true;
-}, {
-    message: "Please enter valid credit card details.",
-    path: ['paymentMethod']
 });
 
 type CheckoutFormValues = z.infer<typeof checkoutSchema>;
@@ -45,22 +38,45 @@ export default function CheckoutPage() {
   const router = useRouter();
   const { items, totalPrice, clearCart } = useCart();
   const { toast } = useToast();
-  const { formatPrice } = useCurrency();
+  const { currency, formatPrice } = useCurrency();
+  const [clientSecret, setClientSecret] = useState<string | null>(null);
   
   const form = useForm<CheckoutFormValues>({
     resolver: zodResolver(checkoutSchema),
-    defaultValues: { name: '', email: '', address: '', city: '', zip: '' },
+    defaultValues: { name: '', email: '', address: '', city: '', zip: '', paymentMethod: 'card' },
   });
 
   const paymentMethod = form.watch('paymentMethod');
 
-  const onSubmit = (data: CheckoutFormValues) => {
-    console.log("Order placed:", data);
+  useEffect(() => {
+    if (paymentMethod === 'card' && totalPrice > 0) {
+      createPaymentIntent({ amount: totalPrice, currency: currency.code })
+        .then(({ clientSecret }) => {
+          setClientSecret(clientSecret);
+        })
+        .catch(error => {
+          console.error(error);
+          toast({
+            title: "Error",
+            description: "Could not initialize payment. Please try again.",
+            variant: "destructive"
+          });
+        });
+    }
+  }, [paymentMethod, totalPrice, currency.code, toast]);
+
+  const onSuccessfulCheckout = () => {
     toast({
       title: "Order Placed!",
       description: "Thank you for your purchase. Your items are on their way!",
     });
     clearCart();
+    // The redirect will be handled by Stripe's return_url
+  };
+
+  const handleCashCheckout = (data: CheckoutFormValues) => {
+    console.log("Order placed with cash:", data);
+    onSuccessfulCheckout();
     router.push('/');
   };
 
@@ -75,19 +91,23 @@ export default function CheckoutPage() {
         </div>
     )
   }
+  
+  const stripeOptions: StripeElementsOptions = {
+    clientSecret: clientSecret || undefined,
+    appearance: { theme: 'stripe' },
+  };
 
   return (
     <div className="container mx-auto px-4 py-12">
       <h1 className="text-4xl font-bold font-headline text-center mb-10">Checkout</h1>
       <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="grid md:grid-cols-2 gap-12 items-start">
+      <form onSubmit={form.handleSubmit(handleCashCheckout)} className="grid md:grid-cols-2 gap-12 items-start">
         <Card>
             <CardHeader>
                 <CardTitle>Shipping Information</CardTitle>
                 <CardDescription>Enter your details to complete the purchase.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              
                 <FormField
                   control={form.control}
                   name="name"
@@ -155,7 +175,6 @@ export default function CheckoutPage() {
                     )}
                   />
                 </div>
-            
             </CardContent>
         </Card>
 
@@ -216,57 +235,25 @@ export default function CheckoutPage() {
                     </FormItem>
                   )}
                 />
-                {paymentMethod === 'card' && (
-                  <div className="space-y-4 pt-6">
-                     <FormField
-                        control={form.control}
-                        name="cardNumber"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Card Number</FormLabel>
-                            <FormControl>
-                              <Input placeholder="0000 0000 0000 0000" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <div className="flex gap-4">
-                        <FormField
-                            control={form.control}
-                            name="cardExpiry"
-                            render={({ field }) => (
-                            <FormItem className="flex-grow">
-                                <FormLabel>Expiry Date</FormLabel>
-                                <FormControl>
-                                <Input placeholder="MM / YY" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="cardCvc"
-                            render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>CVC</FormLabel>
-                                <FormControl>
-                                <Input placeholder="123" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                            )}
-                        />
-                      </div>
-                  </div>
+                <div className="pt-6">
+                {paymentMethod === 'card' ? (
+                  clientSecret ? (
+                    <Elements options={stripeOptions} stripe={stripePromise}>
+                      <CheckoutForm onSuccessfulCheckout={onSuccessfulCheckout} />
+                    </Elements>
+                  ) : (
+                    <div className="flex items-center justify-center h-24">
+                        <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+                    </div>
+                  )
+                ) : (
+                  <Button type="submit" size="lg" className="w-full">
+                    Place Order (Cash)
+                  </Button>
                 )}
+                </div>
                 </CardContent>
             </Card>
-
-            <Button type="submit" size="lg" className="w-full">
-                Place Order
-            </Button>
         </div>
       </form>
       </Form>
