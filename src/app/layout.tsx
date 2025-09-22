@@ -9,7 +9,6 @@ import { CurrencyProvider } from '@/context/currency-context';
 export const metadata: Metadata = {
   title: 'Mega Shop',
   description: 'Your one-stop shop for everything you need.',
-  manifest: '/manifest.json',
 };
 
 export default function RootLayout({
@@ -30,7 +29,6 @@ export default function RootLayout({
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="theme-color" content="#FFFFFF" />
-        <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
       </head>
       <body className="font-body antialiased">
         <CartProvider>
